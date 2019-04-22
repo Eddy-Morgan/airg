@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+  <h5>{% block page_title %}{% endblock %}</h5>
+<div class="row">
+  <div class = "col-lg-6">
+  </div>
+  <div class = "col-lg-6">
+  {{ loginform.csrf_token }}
+  <div class="form-group">
+        {{ loginform.portfolio_id.label }}
+        {{ loginform.portfolio_id(class="form-control",
+                            placeholder="Enter your Public Key",required=required)}}
+  </div>
+  <div class="form-group">
+        {{ loginform.password.label }}
+        {{ loginform.password(class="form-control",
+                            placeholder="Enter your Private Key",required=required)}}
+  </div>                      
+  {{ loginform.submit(value="Login",class="btn btn-default")}}
+  <p class="join">New Here?<span><a href="{{ url_for('register') }}">JOIN NOW</a></span></p>
+  </div>
+
+
+  
+{% endblock %}

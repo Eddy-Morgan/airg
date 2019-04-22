@@ -1,0 +1,60 @@
+@font-face {
+  font-family: alexa;
+  src: url(../font/alexandria/AlexandriaFLF-Bold.ttf);
+}
+
+@font-face {
+  font-family: alexa-italic;
+  src: url(../font/alexandria/AlexandriaFLF-Italic.ttf);
+}
+
+body {
+  background-color: rgba(10, 248, 248, 0.541) !important;
+  font-family: alexa !important;
+  margin: 50px  !important;
+}
+
+h1  {
+  font-family: alexa-italic !important;
+  font-size: 70px !important; 
+  margin-bottom: 20px !important;
+}
+
+h5 {
+  margin-bottom: 40px !important;
+}
+
+h1 a:hover, a:active, .join a:hover, .join a:active {
+  background-color: #f44336 !important;
+  color: #FFFFFF !important;
+  text-decoration: none !important;
+}
+
+.home_ln a:link,.home_ln a:visited, h1 a:link, h1 a:visited, .join a {
+  background-color: #f44336;
+  color: white;
+  font-family: alexa !important;
+  padding: 15px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px;
+  
+}
+
+.join  {
+  margin-top: 40px; 
+}
+
+.home_ln {
+  position: relative;
+  bottom: 10px;
+  top: 10px;
+}
+
+
+.home_ln a:hover, a:active {
+  background-color: #3e3c37;
+  color: #FFFFFF !important;
+  text-decoration: none !important;
+}

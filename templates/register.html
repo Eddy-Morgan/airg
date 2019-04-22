@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+  {{ registrationform.csrf_token }}
+    <div class="form-group">
+        {{registrationform.myField.label }}
+        {{registrationform.myField(class="form-control",required=required)}}
+    </div>
+  <div class="form-group institution box">
+        {{ registrationform.institution_name.label }}
+        {{ registrationform.institution_name(class="form-control",
+                            placeholder="Enter Name",required=required)}}
+  </div>
+  <div class="form-group employer box">
+        {{ registrationform.company_name.label }}
+        {{ registrationform.company_name(class="form-control",
+                            placeholder="Enter your Email",required=required)}}
+  </div>
+    <div class="form-group">
+        {{ registrationform.email.label }}
+        {{ registrationform.email(class="form-control",
+                            placeholder="Enter your Email",required=required)}}
+  </div>
+  <div class="form-group">
+    {{ registrationform.password.label }}
+    {{ registrationform.password(class="form-control",
+                            placeholder="Enter your Password",required=required)}}
+</div>
+<div class="form-group">
+    {{ registrationform.passwordconfirm.label }}
+    {{ registrationform.passwordconfirm(class="form-control",
+                            placeholder="Confirm Password",required=required)}}
+</div>
+   <div class="form-group">
+   {{ registrationform.agree(class="btn btn-default")}}
+    {{ registrationform.agree.label }}
+</div>
+  {{ registrationform.submit(value="Register",class="btn btn-default")}}
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            } else{
+                $(".box").hide();
+            }
+        });
+    }).change();
+});
+</script>
+{% endblock %}
