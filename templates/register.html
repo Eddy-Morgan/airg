@@ -2,6 +2,7 @@
 
 {% block page_content %}
 
+<form action="{{url_for('register')}}" method="POST" role="form">
   {{ registrationform.csrf_token }}
     <div class="form-group">
         {{registrationform.myField.label }}
@@ -10,12 +11,12 @@
   <div class="form-group institution box">
         {{ registrationform.institution_name.label }}
         {{ registrationform.institution_name(class="form-control",
-                            placeholder="Enter Name",required=required)}}
+                            placeholder="Enter Name",required=required, value=None)}}
   </div>
   <div class="form-group employer box">
         {{ registrationform.company_name.label }}
         {{ registrationform.company_name(class="form-control",
-                            placeholder="Enter your Email",required=required)}}
+                            placeholder="Enter your Email",required=required, value=None)}}
   </div>
     <div class="form-group">
         {{ registrationform.email.label }}
@@ -36,8 +37,8 @@
    {{ registrationform.agree(class="btn btn-default")}}
     {{ registrationform.agree.label }}
 </div>
-  {{ registrationform.submit(value="Register",class="btn btn-default")}}
-
+  {{ registrationform.submit(class="btn btn-default")}}
+</form>
 <script type="text/javascript">
 $(document).ready(function(){
     $("select").change(function(){

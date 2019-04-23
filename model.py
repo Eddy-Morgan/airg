@@ -3,8 +3,12 @@ from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 import binascii
+from flask_admin.contrib.sqla import ModelView
+from wtforms import ValidationError
 from flask import request
 import requests
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash,check_password_hash
 
 import hashlib
 import json
@@ -16,6 +20,73 @@ MINING_SENDER = "THE BLOCKCHAIN"
 MINING_REWARD = 1
 MINING_DIFFICULTY = 2
 
+db = SQLAlchemy()
+
+class Students(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100),unique=True,index=True)
+    public_key = db.Column(db.String(), unique=True,index=True)
+    private_key = db.Column(db.String())
+    pwdhash = db.Column(db.String())
+
+    def __init__(self,email,public_key,private_key,password):
+        self.email = email
+        self.public_key = public_key
+        self.private_key = private_key
+        self.password = password
+        self.pwdhash = generate_password_hash(password)
+
+    def __repr__(self):
+        return '%s' % self.email
+
+    def check_password(self, password):
+        return check_password_hash(self.pwdhash, password)
+
+
+class Institutions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    institution_name = db.Column(db.String())
+    email = db.Column(db.String(100),unique=True,index=True)
+    public_key = db.Column(db.String(), unique=True,index=True)
+    private_key = db.Column(db.String())
+    pwdhash = db.Column(db.String())
+
+    def __init__(self,institution_name,email,public_key,private_key,password):
+        self.institution_name = institution_name
+        self.email = email
+        self.public_key = public_key
+        self.private_key = private_key
+        self.password = password
+        self.pwdhash = generate_password_hash(password)
+
+    def __repr__(self):
+        return '%s' % self.institution_name
+
+    def check_password(self, password):
+        return check_password_hash(self.pwdhash, password)
+
+
+class Employers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    company =  db.Column(db.String())
+    email = db.Column(db.String(100),unique=True,index=True)
+    public_key = db.Column(db.String(), unique=True,index=True)
+    private_key = db.Column(db.String())
+    pwdhash = db.Column(db.String())
+
+    def __init__(self,company,email,public_key,private_key,password):
+        self.company = company
+        self.email = email
+        self.public_key = public_key
+        self.private_key = private_key
+        self.password = password
+        self.pwdhash = generate_password_hash(password)
+
+    def __repr__(self):
+        return '%s' % self.company
+
+    def check_password(self, password):
+        return check_password_hash(self.pwdhash, password)
 
 class Certification:
     def __init__(self, sender_address, sender_private_key, recipient_address, certificate):
@@ -93,7 +164,7 @@ class Blockchain:
         if sender_address == MINING_SENDER:
             self.certifications.append(certification)
             return len(self.chain) + 1
-        #Manages certifications from portfolio to another portfolio
+        #Manages certifications from wallet to another wallet
         else:
             certification_verification = self.verify_certification_signature(sender_address, signature, certification)
             if certification_verification:
@@ -217,4 +288,6 @@ class Blockchain:
         return False
 
 
-
+class AdminModelView(ModelView):
+    can_delete = True
+    page_size = 50
